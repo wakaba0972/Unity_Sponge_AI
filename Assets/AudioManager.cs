@@ -7,25 +7,22 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Networking;
 
-public class Audioloader : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
-
+    /*string url = "http://192.168.76.19:9880/tts";
+    string text = "啊，我本?要跟你?，我被球球到了，后?雪融化?成了水，我就喝下水了，?在好多了。";
+    string postData = "{\r\n  \"text\": \"" + text + "\",\r\n  \"text_lang\": \"zh\",\r\n  \"ref_audio_path\": \"ref_audios\\\\star_ref.wav\",\r\n  \"aux_ref_audio_paths\": [],\r\n  \"prompt_lang\": \"zh\",\r\n  \"prompt_text\": \"我本?要跟你?我本?要跟你?我本?要跟你?啊，我本?要跟你?，我被球球到了，后?雪融化?成了水，我就喝下水了，?在好多了。\",\r\n  \"top_k\": 5,\r\n  \"top_p\": 1,\r\n  \"temperature\": 1,\r\n  \"text_split_method\": \"cut0\",\r\n  \"batch_size\": 1,\r\n  \"batch_threshold\": 0.75,\r\n  \"split_bucket\": true,\r\n  \"speed_factor\": 1,\r\n  \"fragment_interval\": 0.3,\r\n  \"seed\": -1,\r\n  \"media_type\": \"wav\",\r\n  \"streaming_mode\": false,\r\n  \"parallel_infer\": true,\r\n  \"repetition_penalty\": 1.35,\r\n  \"sample_steps\": 32,\r\n  \"super_sampling\": false\r\n}";
+    */
     void Update()
     {
-        string url = "http://192.168.76.19:9880/tts";
-        string text = "啊，我本?要跟你?，我被球球到了，后?雪融化?成了水，我就喝下水了，?在好多了。";
-        string postData = "{\r\n  \"text\": \"" + text + "\",\r\n  \"text_lang\": \"zh\",\r\n  \"ref_audio_path\": \"ref_audios\\\\star_ref.wav\",\r\n  \"aux_ref_audio_paths\": [],\r\n  \"prompt_lang\": \"zh\",\r\n  \"prompt_text\": \"我本?要跟你?我本?要跟你?我本?要跟你?啊，我本?要跟你?，我被球球到了，后?雪融化?成了水，我就喝下水了，?在好多了。\",\r\n  \"top_k\": 5,\r\n  \"top_p\": 1,\r\n  \"temperature\": 1,\r\n  \"text_split_method\": \"cut0\",\r\n  \"batch_size\": 1,\r\n  \"batch_threshold\": 0.75,\r\n  \"split_bucket\": true,\r\n  \"speed_factor\": 1,\r\n  \"fragment_interval\": 0.3,\r\n  \"seed\": -1,\r\n  \"media_type\": \"wav\",\r\n  \"streaming_mode\": false,\r\n  \"parallel_infer\": true,\r\n  \"repetition_penalty\": 1.35,\r\n  \"sample_steps\": 32,\r\n  \"super_sampling\": false\r\n}";
-
-
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        /*if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             Debug.Log("按下空白鍵，開始請求 TTS 服務");
             StartCoroutine(ttsRequest(url, postData));
-        }
-
+        }*/
     }
 
-    IEnumerator ttsRequest(string url, string postData)
+   /* IEnumerator ttsRequest(string url, string postData)
     {
         byte[] postDataBytes = Encoding.UTF8.GetBytes(postData);
         UnityWebRequest request = new UnityWebRequest(url, "POST");
@@ -65,5 +62,5 @@ public class Audioloader : MonoBehaviour
             audioSource.clip = clip;
             audioSource.Play();
         }
-    }
+    }*/
 }

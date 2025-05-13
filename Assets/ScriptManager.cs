@@ -7,11 +7,15 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Networking;
 
-public class Scriptloader : MonoBehaviour
+public class ScriptManager : MonoBehaviour
 {
-    private void Start()
+    private int Counter;
+    private string URL = "http://localhost:3000/scripts";
+
+    void Start()
     {
-        //string URL = "http://localhost:3000/scripts";
+        // 從 PlayerPrefs 讀取Counter, 用作獲取劇本的編號
+        Counter = PlayerPrefs.GetInt("Counter", 0);
     }
 
     void Update()
@@ -19,10 +23,10 @@ public class Scriptloader : MonoBehaviour
 
     }
 
-   /* IEnumerator scriptRequest(string url, string postData)
+    private void OnDestroy()
     {
-        
-    }*/
+        PlayerPrefs.SetInt("Counter", Counter);
+    }
 
     public void say()
     {
