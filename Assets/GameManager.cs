@@ -3,14 +3,12 @@ using UnityEngine.InputSystem.Android;
 
 public class GameManager : MonoBehaviour
 {
-
     public static GameManager Instance;
-    private AudioManager audioManager;
-    private ScriptManager scriptManager;
+    public AudioManager audioManager;
+    public ScriptManager scriptManager;
 
     void Awake()
     {
-
         // 單例處理
         if (Instance != null && Instance != this)
         {
@@ -19,15 +17,11 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        // 獲取 AudioManager 和 ScriptManager
-        audioManager = transform.Find("AudioManager")?.GetComponent<AudioManager>();
-        scriptManager = transform.Find("ScriptManager")?.GetComponent<ScriptManager>();
     }
 
     void Start()
     {
-        
+        scriptManager.say();
     }
 
     void Update()
