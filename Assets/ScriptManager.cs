@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
-using System.Text;
-using System.Collections;
-using System.IO;
-using System;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using UnityEngine.Networking;
+using System.Threading.Tasks;
+
 
 public class ScriptManager : MonoBehaviour
 {
+    private int MAX_ID;
     private int Counter;
-    private string URL = "http://localhost:3000/scripts";
+    private string URL_SCRIPT  = "http://localhost:3000/scripts";
+    private string URL_MAX = "http://localhost:3000/max";
 
     void Start()
     {
@@ -18,18 +16,36 @@ public class ScriptManager : MonoBehaviour
         Counter = PlayerPrefs.GetInt("Counter", 0);
     }
 
-    void Update()
-    {
-
-    }
-
     private void OnDestroy()
     {
         PlayerPrefs.SetInt("Counter", Counter);
     }
 
-    public void say()
+    public async void say()
     {
-        Debug.Log("按下空白鍵，開始請求 TTS 服務");
+        Debug.Log(await RequestMaxID());
+    }
+
+    // 呼叫RequestMaxID()獲取當前最大的ID並設定為MAX_ID
+    public async void SetMaxID()
+    {
+        MAX_ID = await RequestMaxID();
+    }
+
+    public void RequestScript()
+    {
+
+    }
+
+    // 我放棄coroutine啦!!!
+    // 利用Server的/max路由獲取當前最大的ID
+    private async Task<int> RequestMaxID()
+    {
+
+        using (UnityWebRequest request = UnityWebRequest.Get(URL_MAX))
+        {
+            await request.SendWebRequest();
+            return int.Parse(request.downloadHandler.text);
+        }
     }
 }
