@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        scriptManager.say();
+        //scriptManager.say();
     }
 
     void Update()

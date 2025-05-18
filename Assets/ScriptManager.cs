@@ -13,7 +13,7 @@ public class ScriptManager : MonoBehaviour
     void Start()
     {
         // 從 PlayerPrefs 讀取Counter, 用作獲取劇本的編號
-        Counter = PlayerPrefs.GetInt("Counter", 0);
+        //Counter = PlayerPrefs.GetInt("Counter", 0);
     }
 
     private void OnDestroy()
