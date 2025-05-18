@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Android;
 
 public class GameManager : MonoBehaviour
@@ -6,6 +7,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public AudioManager audioManager;
     public ScriptManager scriptManager;
+
+    private GameObject sponge;
+    private GameObject star;
+    private GameObject squidward;
+    private GameObject krab;
+
 
     void Awake()
     {
@@ -21,11 +28,19 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //scriptManager.say();
+        sponge = GameObject.Find("Spongebob wrapper");
+        star = GameObject.Find("Patrick wrapper");
+        squidward = GameObject.Find("Squidward wrapper");
+        krab = GameObject.Find("Krab wrapper");
     }
 
     void Update()
     {
-        
+
+    }
+
+    private void  New_Round()
+    {
+
     }
 }
