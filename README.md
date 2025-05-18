@@ -11,11 +11,11 @@
 
 ## AudioManager
 
-- [ ] 根據script的台詞向TTS Server請求.wav file，並儲存在Local(?)
-- [ ] 播放.wav file
+- [x] 根據script的台詞向TTS Server請求.wav file，並儲存在Local(?)
+- [x] 播放.wav file
 
 ## GameManager
 
-- [ ] 管理AudioManager和ScriptManager
-- [ ] 異步
+- [ ] 整合AudioManager和ScriptManager
+- [ ] 異步 How?
 - [ ] 控制界面
