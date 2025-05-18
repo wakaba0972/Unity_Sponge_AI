@@ -11,7 +11,7 @@
 
 ## AudioManager
 
-- [x] 根據script的台詞向TTS Server請求.wav file，並儲存在Local(?)
+- [ ] 根據script的台詞向TTS Server請求.wav file，並儲存在Local(?)
 - [x] 播放.wav file
 
 ## GameManager
