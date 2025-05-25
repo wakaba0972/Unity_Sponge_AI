@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     private GameObject squidward;
     private GameObject krab;
 
-    // 已完成的劇本數(ID)
+    // 已播放的劇本數(ID)
     private int Executable_ID;
 
     // 已儲存文本的劇本數(ID)
@@ -49,12 +49,17 @@ public class GameManager : MonoBehaviour
         krab = GameObject.Find("Krab wrapper");
 
         // 從 PlayerPrefs 讀取Counter, 用作獲取劇本的編號
-        Executable_ID = PlayerPrefs.GetInt("Executable_ID", 0);
-        Script_ID = PlayerPrefs.GetInt("Script_ID", 0);
-        TTS_ID = PlayerPrefs.GetInt("TTS_ID", 0);
+        Executable_ID = PlayerPrefs.GetInt("Executable_ID", -1);
+        Script_ID = PlayerPrefs.GetInt("Script_ID", -1);
+        TTS_ID = PlayerPrefs.GetInt("TTS_ID", -1);
+
+        Debug.Log($"當前Executable_ID: {Executable_ID}");
+        Debug.Log($"當前Script_ID: {Script_ID}");
+        Debug.Log($"當前TTS_ID: {TTS_ID}");
 
         // 背景執行Script_Request_Loop()
         _ = Script_Request_Loop();
+        _ = TTS_Request_Loop();
     }
 
     void Update()
@@ -65,6 +70,26 @@ public class GameManager : MonoBehaviour
     private void  New_Round()
     {
 
+    }
+
+    private async Task TTS_Request_Loop()
+    {
+        while (!Stop)
+        {
+            if(audioManager.isRunning)
+            {
+                await Task.Delay(1000); // 等待1秒後再嘗試
+                continue;
+            }
+
+            Debug.Log("執行TTS Request!");
+
+            // 更新Script_ID, 向Server請求劇本並儲存至本地端
+            TTS_ID = await audioManager.Request(TTS_ID, Script_ID);
+
+            // 每1秒請求一次
+            await Task.Delay(10000);
+        }
     }
 
     private async Task Script_Request_Loop() {
@@ -88,9 +113,9 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("TTS_ID", TTS_ID);*/
 
         // 測試用
-        PlayerPrefs.SetInt("Executable_ID", 0);
-        PlayerPrefs.SetInt("Script_ID", 0);
-        PlayerPrefs.SetInt("TTS_ID", 0);
+        PlayerPrefs.SetInt("Executable_ID", -1);
+        PlayerPrefs.SetInt("Script_ID", -1);
+        PlayerPrefs.SetInt("TTS_ID", -1);
 
         // 中止請求
         Stop = true;
