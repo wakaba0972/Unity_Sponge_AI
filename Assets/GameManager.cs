@@ -76,19 +76,17 @@ public class GameManager : MonoBehaviour
     {
         while (!Stop)
         {
-            if(audioManager.isRunning)
+            if (audioManager.isRunning)
             {
-                await Task.Delay(1000); // 等待1秒後再嘗試
+                await Task.Delay(500); // 等待1秒後再嘗試
                 continue;
             }
-
-            Debug.Log("執行TTS Request!");
 
             // 更新Script_ID, 向Server請求劇本並儲存至本地端
             TTS_ID = await audioManager.Request(TTS_ID, Script_ID);
 
             // 每1秒請求一次
-            await Task.Delay(10000);
+            await Task.Delay(500);
         }
     }
 
