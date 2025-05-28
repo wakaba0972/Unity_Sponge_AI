@@ -1,10 +1,6 @@
 using UnityEngine;
-using System.Text;
-using System.Collections;
 using System.IO;
 using System;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 
@@ -19,16 +15,6 @@ public class AudioManager : MonoBehaviour
     {
         PATH = Application.persistentDataPath;
         audioSource = gameObject.GetComponent<AudioSource>();
-    }
-
-    void Update()
-    {
-        /*if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            string URL = DefaultURL + "character=star&text=是不是帳號密碼太臭的原因";
-            Debug.Log("按下空白鍵，開始請求 TTS 服務");
-            Send(URL);
-        }*/
     }
 
     private ScriptStruct OpenScript(int id)
@@ -93,12 +79,24 @@ public class AudioManager : MonoBehaviour
 
     public async Task PlayAudio(string filePath)
     {
+        Debug.Log($"開始播放音頻: {filePath}");
         using (UnityWebRequest audioRequest = UnityWebRequestMultimedia.GetAudioClip("file://" + filePath, AudioType.WAV))
         {
             await audioRequest.SendWebRequest();
             AudioClip clip = DownloadHandlerAudioClip.GetContent(audioRequest);
             audioSource.clip = clip;
             audioSource.Play();
+        }
+
+        await WaitForAudioToFinish();
+    }
+
+    private async Task WaitForAudioToFinish()
+    {
+        // 等待直到播放完（播放中 && clip 沒結束）
+        while (audioSource.isPlaying)
+        {
+            await Task.Yield();
         }
     }
 }

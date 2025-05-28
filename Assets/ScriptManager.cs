@@ -2,7 +2,6 @@
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 using System;
-using UnityEditor.PackageManager.Requests;
 using System.IO;
 
 
@@ -89,7 +88,7 @@ public class ScriptManager : MonoBehaviour
             using (UnityWebRequest request = UnityWebRequest.Get(URL_MAX))
             {
                 await request.SendWebRequest();
-                Debug.Log("取得MAX_ID " + request.downloadHandler.text);
+                //Debug.Log("取得MAX_ID " + request.downloadHandler.text);
 
                 return int.Parse(request.downloadHandler.text);
             }
