@@ -38,21 +38,29 @@ public class AudioManager : MonoBehaviour
         int res = Current_TTS_ID;
         isRunning = true;
 
-        if(Current_TTS_ID < Current_Script_ID)
+        try
         {
-            Debug.Log($"開始處理TTS, {Current_TTS_ID+1}劇本");
-            ScriptStruct scriptText = OpenScript(Current_TTS_ID+1);
-            for(int i=0; i < scriptText.script.Length; ++i)
+            if (Current_TTS_ID < Current_Script_ID)
             {
-                Line line = scriptText.script[i];
-                string character = line.character;
-                string text = line.text;
-                string URL = $"{DefaultURL}character={character}&text={text}";
+                Debug.Log($"開始處理TTS, {Current_TTS_ID + 1}劇本");
+                ScriptStruct scriptText = OpenScript(Current_TTS_ID + 1);
+                for (int i = 0; i < scriptText.script.Length; ++i)
+                {
+                    Line line = scriptText.script[i];
+                    string character = line.character;
+                    string text = line.text;
+                    string URL = $"{DefaultURL}character={character}&text={text}";
 
-                await Handle(URL, Current_TTS_ID+1, i);
+                    await Handle(URL, Current_TTS_ID + 1, i);
+                }
+                res++;
             }
-            res++;
         }
+        catch (Exception e)
+        {
+            Debug.LogError($"處理TTS失敗: {e.Message}");
+        }
+
         isRunning = false;
 
         return res;

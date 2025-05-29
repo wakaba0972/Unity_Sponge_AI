@@ -149,6 +149,8 @@ public class AnimeManager : MonoBehaviour
         isRunning = true;
         int res = Played_ID;
 
+        //Debug.Log($"當前已播放劇本數: {Played_ID}，TTS劇本數: {TTS_ID}");
+
         if (Played_ID < TTS_ID)
         {
             Debug.Log($"開始播放劇本: {Played_ID + 1}");
@@ -213,10 +215,10 @@ public class AnimeManager : MonoBehaviour
             res++;
         }
 
-        StopCoroutine(Sponge_Coroutine);
-        StopCoroutine(Star_Coroutine);
-        StopCoroutine(Squid_Coroutine);
-        StopCoroutine(Krab_Coroutine);
+        if (Sponge_Coroutine != null) StopCoroutine(Sponge_Coroutine);
+        if (Star_Coroutine != null) StopCoroutine(Star_Coroutine);
+        if (Squid_Coroutine != null) StopCoroutine(Squid_Coroutine);
+        if (Krab_Coroutine != null) StopCoroutine(Krab_Coroutine);
 
         isRunning = false;
         return res;

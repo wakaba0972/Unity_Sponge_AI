@@ -14,16 +14,16 @@ public class GameManager : MonoBehaviour
     private GameObject krab;
 
     // 已播放的劇本數(ID)
-    private int Played_ID;
+    public int Played_ID;
 
     // 已儲存文本的劇本數(ID)
-    private int Script_ID;
+    public int Script_ID;
 
     // 已儲存TTS的劇本數(ID)  
-    private int TTS_ID;
+    public int TTS_ID;
 
     // 用於停止請求的標誌
-    private bool Stop = false;
+    public bool Stop = false;
 
 
     void Awake()
@@ -96,13 +96,13 @@ public class GameManager : MonoBehaviour
     {
         // 程式結束時儲存當前的Counter
         //PlayerPrefs.SetInt("Played_ID", Played_ID);
-        PlayerPrefs.SetInt("Script_ID", Script_ID);
-        PlayerPrefs.SetInt("TTS_ID", TTS_ID);
+        //PlayerPrefs.SetInt("Script_ID", Script_ID);
+        //PlayerPrefs.SetInt("TTS_ID", TTS_ID);
 
         // 測試用
         PlayerPrefs.SetInt("Played_ID", -1);
-        //PlayerPrefs.SetInt("Script_ID", -1);
-        //PlayerPrefs.SetInt("TTS_ID", -1);
+        PlayerPrefs.SetInt("Script_ID", -1);
+        PlayerPrefs.SetInt("TTS_ID", -1);
 
         // 中止請求
         Stop = true;
