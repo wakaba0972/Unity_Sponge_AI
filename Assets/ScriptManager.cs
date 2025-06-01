@@ -8,8 +8,8 @@ using System.IO;
 public class ScriptManager : MonoBehaviour
 {
     private string SAVE_PATH;
-    private const string URL_SCRIPT  = "http://localhost:3000/scripts";
-    private const string URL_MAX = "http://localhost:3000/max";
+    private const string URL_SCRIPT  = "http://node.swallows.cc:3000/scripts";
+    private const string URL_MAX = "http://node.swallows.cc:3000/max";
 
     private void Start()
     {

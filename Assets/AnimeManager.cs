@@ -21,16 +21,19 @@ public class AnimeManager : MonoBehaviour
     public GameObject star;
     public GameObject squidward;
     public GameObject krab;
+    public GameObject sandy;
 
     public GameObject Sponge_HeadPoint;
     public GameObject Star_HeadPoint;
     public GameObject Squid_HeadPoint;
     public GameObject Krab_HeadPoint;
+    public GameObject Sandy_HeadPoint;
 
     private Coroutine Sponge_Coroutine;
     private Coroutine Star_Coroutine;
     private Coroutine Squid_Coroutine;
     private Coroutine Krab_Coroutine;
+    private Coroutine Sandy_Coroutine;
 
     private void Start()
     {
@@ -39,10 +42,11 @@ public class AnimeManager : MonoBehaviour
 
     private void init()
     {
-        sponge.transform.position = new Vector3(10, 2, -25);
+        sponge.transform.position = new Vector3(-1, 2, -11);
         star.transform.position = new Vector3(4, 2, -20);
-        squidward.transform.position = new Vector3(15, 2, -25);
-        krab.transform.position = new Vector3(8, 2, -19);
+        squidward.transform.position = new Vector3(5, 2, -8);
+        krab.transform.position = new Vector3(10, 2, -16);
+        sandy.transform.position = new Vector3(-5, 2, -19);
     }
 
     private IEnumerator LookRotation(GameObject source, GameObject target, float speed = 2f)
@@ -69,57 +73,6 @@ public class AnimeManager : MonoBehaviour
             yield return null;
         }
     }
-
-    private IEnumerator WalkAround(GameObject a)
-    {
-        float distance = UnityEngine.Random.Range(5f, 8f);
-        float time = UnityEngine.Random.Range(0f,2f);
-        float speed = 6f;
-
-        Vector3 direction = new Vector3(
-            UnityEngine.Random.Range(-1f, 1f),
-            0f,
-            UnityEngine.Random.Range(-1f, 1f)
-        ).normalized;
-
-        Vector3 startPosition = a.transform.position;
-        Vector3 targetPosition = startPosition + direction * distance;
-
-        // Step 1: 旋轉面向目標
-        while (true)
-        {
-            Vector3 directionToTarget = targetPosition - a.transform.position;
-            directionToTarget.y = 0f;
-
-            if (directionToTarget.sqrMagnitude < 0.001f)
-                yield break; // 安全中斷
-
-            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-            a.transform.rotation = Quaternion.Lerp(a.transform.rotation, targetRotation, Time.deltaTime * 10f);
-
-            if (Quaternion.Angle(a.transform.rotation, targetRotation) < 0.5f)
-            {
-                a.transform.rotation = targetRotation;
-                break;
-            }
-
-            yield return null;
-        }
-
-        double sTime = 0;
-
-        // Step 2: 向目標位置移動
-        while (true)
-        {
-            a.transform.Translate(a.transform.forward * speed * Time.deltaTime, Space.World);
-            sTime += Time.deltaTime;
-            if (sTime > time)
-                yield break;
-
-            yield return null;
-        }
-    }
-
     Coroutine RandMove(GameObject a, GameObject b) 
     {
         return StartCoroutine(LookRotation(a, b));
@@ -174,6 +127,12 @@ public class AnimeManager : MonoBehaviour
                 vcams[i&1].Priority = 10;
                 vcams[1-(i&1)].Priority = 0;
 
+                if (Sponge_Coroutine != null) StopCoroutine(Sponge_Coroutine);
+                if (Star_Coroutine != null) StopCoroutine(Star_Coroutine);
+                if (Squid_Coroutine != null) StopCoroutine(Squid_Coroutine);
+                if (Krab_Coroutine != null) StopCoroutine(Krab_Coroutine);
+                if (Sandy_Coroutine != null) StopCoroutine(Sandy_Coroutine);
+
                 switch (character)
                 {
                     case "海綿寶寶":
@@ -181,24 +140,35 @@ public class AnimeManager : MonoBehaviour
                         Star_Coroutine = RandMove(star, sponge);
                         Squid_Coroutine = RandMove(squidward, sponge);
                         Krab_Coroutine = RandMove(krab, sponge);
+                        Sandy_Coroutine = RandMove(sandy, sponge);
                         break;
                     case "派大星":
                         vcams[i&1].Target = new CameraTarget { TrackingTarget = Star_HeadPoint.transform };
                         Sponge_Coroutine = RandMove(sponge, star);
                         Squid_Coroutine = RandMove(squidward, star);
                         Krab_Coroutine = RandMove(krab, star);
+                        Sandy_Coroutine = RandMove(sandy, star);
                         break;
                     case "章魚哥":
                         vcams[i&1].Target = new CameraTarget { TrackingTarget = Squid_HeadPoint.transform };
                         Sponge_Coroutine = RandMove(sponge, squidward);
                         Star_Coroutine = RandMove(star, squidward);
                         Krab_Coroutine = RandMove(krab, squidward);
+                        Sandy_Coroutine = RandMove(sandy, squidward);
                         break;
                     case "蟹老闆":
                         vcams[i&1].Target = new CameraTarget { TrackingTarget = Krab_HeadPoint.transform };
                         Sponge_Coroutine = RandMove(sponge, krab);
                         Squid_Coroutine = RandMove(squidward, krab);
                         Star_Coroutine = RandMove(star, krab);
+                        Sandy_Coroutine = RandMove(sandy, krab);
+                        break;
+                    case "珊迪":
+                        vcams[i & 1].Target = new CameraTarget { TrackingTarget = Sandy_HeadPoint.transform };
+                        Sponge_Coroutine = RandMove(sponge, sandy);
+                        Squid_Coroutine = RandMove(squidward, sandy);
+                        Star_Coroutine = RandMove(star, sandy);
+                        Krab_Coroutine = RandMove(krab, sandy);
                         break;
 
                     default:
@@ -214,11 +184,6 @@ public class AnimeManager : MonoBehaviour
 
             res++;
         }
-
-        if (Sponge_Coroutine != null) StopCoroutine(Sponge_Coroutine);
-        if (Star_Coroutine != null) StopCoroutine(Star_Coroutine);
-        if (Squid_Coroutine != null) StopCoroutine(Squid_Coroutine);
-        if (Krab_Coroutine != null) StopCoroutine(Krab_Coroutine);
 
         isRunning = false;
         return res;

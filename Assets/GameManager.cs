@@ -8,11 +8,6 @@ public class GameManager : MonoBehaviour
     public ScriptManager scriptManager;
     public AnimeManager animeManager;
 
-    private GameObject sponge;
-    private GameObject star;
-    private GameObject squidward;
-    private GameObject krab;
-
     // 已播放的劇本數(ID)
     public int Played_ID;
 
@@ -28,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+
         // 單例處理
         if (Instance != null && Instance != this)
         {
@@ -95,14 +91,14 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         // 程式結束時儲存當前的Counter
-        //PlayerPrefs.SetInt("Played_ID", Played_ID);
-        //PlayerPrefs.SetInt("Script_ID", Script_ID);
-        //PlayerPrefs.SetInt("TTS_ID", TTS_ID);
+        PlayerPrefs.SetInt("Played_ID", Played_ID);
+        PlayerPrefs.SetInt("Script_ID", Script_ID);
+        PlayerPrefs.SetInt("TTS_ID", TTS_ID);
 
         // 測試用
-        PlayerPrefs.SetInt("Played_ID", -1);
+        /*PlayerPrefs.SetInt("Played_ID", -1);
         PlayerPrefs.SetInt("Script_ID", -1);
-        PlayerPrefs.SetInt("TTS_ID", -1);
+        PlayerPrefs.SetInt("TTS_ID", -1);*/
 
         // 中止請求
         Stop = true;

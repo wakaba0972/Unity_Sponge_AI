@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
     public bool isRunning = false;
     private string PATH;
     public AudioSource audioSource;
-    private string DefaultURL = "http://127.0.0.1:9880/ctts?";
+    private string DefaultURL = "http://26.8.126.215:9880/ctts?";
 
     private void Start()
     {
